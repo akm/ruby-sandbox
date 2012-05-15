@@ -1,0 +1,7 @@
+/* 設定上書き */
+/* テーブル */
+.main-content table{border: solid 1px #CCC; width: auto; table-layout:auto; empty-cells: show; border-collapse: collapse; border-spaing: 0px;}
+.main-content table th {border: solid 1px #CCC;}
+.main-content table td {border: solid 1px #CCC; height: auto; background-color: #FFF;}
+.main-content table tr.even td {}
+.main-content table tr.odd  td {background-color: #F1F1F1;}

@@ -1,0 +1,40 @@
+<% content_for(:css) do -%>
+<link rel="stylesheet" type="text/css" media="screen,projection,print" href="/stylesheets/oktopartial.css" />
+<% end -%>
+<%= render :partial => 'oktopartial/menu' %>
+
+<h1>Editing publication</h1>
+
+<% form_for(:publication, @publication, :html => {:method => :put},
+   :url => {:controller => 'oktopartial/publications', :action => 'update', :id => @publication.id}) do |f| %>
+
+  <%= f.error_messages %>
+
+  <p>
+    <b>Source path:</b>
+    <%=h @publication.source_path %>
+    <%= link_to 'download', {:action => :download, :id => @publication.id} %>
+  </p>
+  
+  <p>
+    <b>Dirname:</b>
+    <%=h @publication.dirname %>
+  </p>
+
+  <p>
+    <b>Status:</b>
+    <%=h @publication.status_name %>
+  </p>
+
+  <p>
+    <%= f.label :published_at %><br />
+    <%= f.datetime_select :published_at %>
+  </p>
+
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', :action => :show, :id => @publication.id %> |
+<%= link_to 'Back', :action => :index %>

@@ -1,0 +1,22 @@
+= oktopartial_sandbox
+このRailsアプリケーションは、oktopartialプラグインの開発環境であり、サンプルの一つです。
+
+oktopartialについては、 
+http://github.com/akm/oktopartial 
+を参照してください。
+
+
+== みどころ
+
+1. public/index.html の oktopartial_layout を使っているところ。
+
+2. オリジナルのmultiflex3と静的なHTMLの部品でスリムになったファイル群の比較
+   オリジナル: http://www.free-css.com/free-css-templates/page48/multiflex-3.php
+   public/multiflex3/index.html
+   public/multiflex3/page_layout*.html
+   public/layouts/*.html
+
+3. app/views/layouts/application.html.erb が普通のRailsのレイアウトと全く同一なのに静的ファイルに適用できちゃうところ。
+
+----
+Copyright © 2009 ‘Takeshi AKIMA, released under the MIT license

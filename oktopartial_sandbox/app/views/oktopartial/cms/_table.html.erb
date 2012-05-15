@@ -1,0 +1,20 @@
+<table>
+  <thead>
+    <tr>
+      <th>Path</th>
+      <th>Static HTML</th>
+      <th>Action</th>
+      <th>View</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @paths.each do |path| -%>
+    <tr class="<%= cycle('even', 'odd') %>">
+      <td class="path" nowrap="nowrap"><%=h(@dir.blank? ? path.name : File.basename(path.name)) %></td>
+      <td class="status"><%=h to_display_status(path.status_static) %></td>
+      <td class="status"><%=h to_display_status(path.status_action) %></td>
+      <td class="status"><%=h to_display_status(path.status_view) %></td>
+    </tr>
+    <% end -%>
+  </tbody>
+</table>

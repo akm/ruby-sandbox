@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<title>Free CSS Templates - Free Template Multiflex 3</title>
+<meta name="description" content="Free CSS Templates features free templates from website template designers and developers throughout the net." />
+<meta name="keywords" content="Free CSS Templates, CSS Website Templates, Templates, Free Templates, CSS" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" media="screen,projection,print" href="/multiflex3/css/layout1_setup.css" />
+<link rel="stylesheet" type="text/css" media="screen,projection,print" href="/multiflex3/css/layout1_text.css" />
+<link rel="stylesheet" type="text/css" media="screen,projection,print" href="/stylesheets/application.css" />
+<%= yield(:css) -%>
+<style>
+<!--
+<%= yield(:style) -%>
+-->
+</style>
+<script type="text/javascript" src="/javascripts/jquery.js"></script>
+<script type="text/javascript" src="/javascripts/oktopartial.js"></script>
+<script type="text/javascript" src="/javascripts/oktopartial-config.js"></script>
+</head>
+<!-- Global IE fix to avoid layout crash when single word size wider than column width -->
+<!--[if IE]><style type="text/css"> body {word-wrap: break-word;}</style><![endif]-->
+<body>
+<!-- Main Page Container -->
+
+  <div class="page-container">
+    <div class="header">
+      <div class="oktopartial_replace">
+        <p class="oktopartial_url">/layouts/header.html</p>
+      </div>
+    </div>
+
+    <div class="main">
+      <div class="main-content">
+        <%= yield %>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="oktopartial_replace">
+        <p class="oktopartial_url">/layouts/footer.html</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

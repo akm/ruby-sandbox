@@ -1,0 +1,21 @@
+/* 共通 */
+br.oktopartial_clear {clear: both;}
+/* メニュー */
+.oktopartial_menu {font-size: small;}
+.oktopartial_menu ul {}
+.oktopartial_menu li {float: left; }
+.oktopartial_menu li .title {font-weight: normal; font-size: small; margin-right: 0.5em;}
+.oktopartial_menu li a      {font-weight: normal; font-size: small; margin-right: 1.5em;}
+
+/* レイアウト */
+.oktopartial_layout1_sidebar {float:left; width: 200px;}
+.oktopartial_layout1_main    {float:left; width: 630px;}
+
+.oktopartial_layout2_publication_main    {float:left; width: 300px;}
+.oktopartial_layout2_publication_list    {float:left; width: 530px;}
+
+
+/* 凡例 */
+.oktopartial_legends dt {float: left; font-weight: bold;}
+.oktopartial_legends dd {margin: 1em;}
+.oktopartial_legends dd:before {content: ' : ';}

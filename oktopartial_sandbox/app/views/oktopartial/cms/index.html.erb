@@ -1,0 +1,38 @@
+<% content_for(:css) do -%>
+<link rel="stylesheet" type="text/css" media="screen,projection,print" href="/stylesheets/oktopartial.css" />
+<% end -%>
+<%= render :partial => 'oktopartial/menu' %>
+
+<% content_for(:style) do -%>
+<%-# パスのテーブル -%>
+.oktopartial_paths table td.path {text-align: left; }
+.oktopartial_paths table td.status {text-align: center;}
+<% end -%>
+
+<h1>Static HTML, Action and Views</h1>
+
+<div class="oktopartial_layout1_sidebar">
+  <ul class="oktopartial_dirs">
+    <li><%= link_to_remote("all", :update => "path_table_container", :url => {:action => 'index'}) %></li>
+    <% @dirs.each do |dir| -%>
+      <li><%= link_to_remote(h(dir), :update => "path_table_container", :url => {:action => 'index', :dir => dir}) %></li>
+    <% end -%>
+  </ul>
+
+  <h2>Legends</h2>
+  <dl class="oktopartial_legends">
+    <dt>--</dt><dd>not exist</dd>
+    <dt>OK</dt><dd>available</dd>
+    <dt>NA</dt><dd>Not Available</dd>
+    <dt>DI</dt><dd>Depends on Implementation or config/routes.rb</dd>
+  </dl>
+  <h2>Note</h2>
+  <ul>
+    <li>actual view file extension is not .html but .html.erb or .rhtml</li>
+  </ul>
+</div>
+<div class="oktopartial_layout1_main">
+  <div id="path_table_container" class="oktopartial_paths">
+    <%= render :partial => 'table' %>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+<% content_for(:css) do -%>
+<link rel="stylesheet" type="text/css" media="screen,projection,print" href="/stylesheets/oktopartial.css" />
+<% end -%>
+<%= render :partial => 'oktopartial/menu' %>
+
+<div class="oktopartial_layout2_publication_main">
+  <p>
+    <b>Source path:</b>
+    <%=h @publication.source_path %>
+    <%= link_to 'download', {:action => :download, :id => @publication.id} %>
+  </p>
+  <p>
+    <b>Dirname:</b>
+    <%=h @publication.dirname %>
+  </p>
+  <p>
+    <b>Published at:</b>
+    <%=h @publication.published_at %>
+  </p>
+  <p>
+    <b>Status:</b>
+    <%=h @publication.status_name %>
+  </p>
+
+  <%= link_to 'Edit', :action => :edit, :id => @publication.id %> |
+  <%= link_to 'Back', :action => :index %>
+</div>
+
+<% unless @publication.entry_paths.empty? -%>
+  <div class="oktopartial_layout2_publication_list">
+    <ul>
+      <%- @publication.entry_paths.each do |entry_path| -%>
+        <li><%= link_to(entry_path, {:action => :preview, :id => @publication.id, :path => entry_path}, :target => :preview) %>
+      <%- end -%>
+  </div>
+<% end -%>

@@ -1,0 +1,6 @@
+[submodule "vendor/plugins/okto_cms"]
+	path = vendor/plugins/okto_cms
+	url = git@github.com:akm/okto_cms.git
+[submodule "vendor/plugins/oktopartial"]
+	path = vendor/plugins/oktopartial
+	url = git@github.com:akm/oktopartial.git
