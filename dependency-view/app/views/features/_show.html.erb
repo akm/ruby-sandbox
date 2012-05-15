@@ -1,0 +1,29 @@
+<h2>'<%=h feature.name %>' requires</h2>
+<%= render :partial => 'dependencies/dependencies', :locals => {:dependencies => feature.dependencies} %>
+
+<br/>
+
+<h2>'<%=h feature.name %>' define these modules/classes</h2>
+<table>
+  <% feature.modules.each do |m| -%>
+    <tr>
+      <td><%= link_to_module(m) %></td>
+    </tr>
+  <% end -%>
+</table>
+
+<br/>
+<br/>
+
+<h2>'<%=h @feature.name %>' referred from</h2>
+<%= render :partial => 'dependencies/dependencies', :locals => {:dependencies => feature.referreds} %>
+
+<h2>source code</h2>
+<% path = @feature.path -%>
+<%=h path %>
+<pre>
+  <%=h File.read(path)  %>
+</pre>
+
+
+

@@ -1,0 +1,9 @@
+<h1>Features#index</h1>
+
+<table>
+  <% @features.sort.each do |feature| -%>
+    <tr>
+      <td><%= link_to h(feature), :action => 'show', :id => feature %></td>
+    </tr>
+  <% end -%>
+</table>

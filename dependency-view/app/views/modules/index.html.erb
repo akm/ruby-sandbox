@@ -1,0 +1,18 @@
+<h1>Modules#index</h1>
+
+<% render_descendants do |klass, depth| -%>
+  <div style="margin-left: <%= depth %>em;">
+    <%= link_to_module(klass) %>
+  </div>
+<% end -%>
+
+
+<table>
+  <% @modules.each do |m| -%>
+    <tr>
+      <td>
+        <%= link_to_module(m) %>
+      </td>
+    </tr>
+  <% end -%>
+</table>
