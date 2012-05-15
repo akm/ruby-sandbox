@@ -1,0 +1,27 @@
+<h1>New request_sending</h1>
+
+<% form_for(@request_sending) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :method %><br />
+    <%= f.text_field :method %>
+  </p>
+  <p>
+    <%= f.label :uri %><br />
+    <%= f.text_field :uri %>
+  </p>
+  <p>
+    <%= f.label :parameters %><br />
+    <%= f.text_area :parameters %>
+  </p>
+  <p>
+    <%= f.label :headers %><br />
+    <%= f.text_area :headers %>
+  </p>
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', request_sendings_path %>

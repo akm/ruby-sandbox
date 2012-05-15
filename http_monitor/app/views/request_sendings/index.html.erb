@@ -1,0 +1,26 @@
+<h1>Listing request_sendings</h1>
+
+<table>
+  <tr>
+    <th>Method</th>
+    <th>Uri</th>
+    <th>Parameters</th>
+    <th>Headers</th>
+  </tr>
+
+<% @request_sendings.each do |request_sending| %>
+  <tr>
+    <td><%=h request_sending.method %></td>
+    <td><%=h request_sending.uri %></td>
+    <td><%=h request_sending.parameters %></td>
+    <td><%=h request_sending.headers %></td>
+    <td><%= link_to 'Show', request_sending %></td>
+    <td><%= link_to 'Edit', edit_request_sending_path(request_sending) %></td>
+    <td><%= link_to 'Destroy', request_sending, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New request_sending', new_request_sending_path %>

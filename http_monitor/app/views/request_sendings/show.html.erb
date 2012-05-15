@@ -1,0 +1,23 @@
+<p>
+  <b>Method:</b>
+  <%=h @request_sending.method %>
+</p>
+
+<p>
+  <b>Uri:</b>
+  <%=h @request_sending.uri %>
+</p>
+
+<p>
+  <b>Parameters:</b>
+  <%=h @request_sending.parameters %>
+</p>
+
+<p>
+  <b>Headers:</b>
+  <%=h @request_sending.headers %>
+</p>
+
+
+<%= link_to 'Edit', edit_request_sending_path(@request_sending) %> |
+<%= link_to 'Back', request_sendings_path %>
