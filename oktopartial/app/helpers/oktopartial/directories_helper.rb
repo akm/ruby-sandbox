@@ -1,0 +1,2 @@
+module Oktopartial::DirectoriesHelper
+end

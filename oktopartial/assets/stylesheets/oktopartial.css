@@ -1,0 +1,41 @@
+/* 共通 */
+br.oktopartial_clear {clear: both;}
+/* メニュー */
+.oktopartial_menu {font-size: small;}
+.oktopartial_menu ul {}
+.oktopartial_menu li {float: left; }
+.oktopartial_menu li .title {font-weight: normal; font-size: small; margin-right: 0.5em;}
+.oktopartial_menu li a      {font-weight: normal; font-size: small; margin-right: 1.5em;}
+
+/* レイアウト */
+.oktopartial_layout1_sidebar {float:left; width: 200px;}
+.oktopartial_layout1_main    {float:left; width: 630px;}
+
+.oktopartial_layout2_publication_main    {float:left; width: 300px;}
+.oktopartial_layout2_publication_list    {float:left; width: 530px;}
+
+
+/* エラー */
+.oktopartial_errors {width: 400px; border: 2px solid red; padding: 7px; padding-bottom: 12px; margin-bottom: 20px; background-color: #f0f0f0; }
+.oktopartial_errors h2 {text-align: left; font-weight: bold; padding: 5px 5px 5px 15px; font-size: 12px; margin: -7px; background-color: #c00; color: #fff; }
+.oktopartial_errors p {color: #333; margin-bottom: 0; padding: 5px; }
+.oktopartial_errors ul li {font-size: 12px; list-style: square; }
+
+/* Tip */
+ul.oktopartial_tip {float:left; padding: 0px; margin:0px;}
+ul.oktopartial_tip > li                 { padding: 0px; margin:0px; background: #FFF; float:left; position:relative; z-index:auto !important /*Non-IE6*/; z-index:1000 /*IE6*/; }
+ul.oktopartial_tip > li       > ul      { padding: 0px; margin:0px; display: none; }
+ul.oktopartial_tip > li       > ul > li { padding: 0px; margin:0px; background: #FFF; font-size:smaller; }
+ul.oktopartial_tip > li:hover > ul       {display:block; width:24.0em; position:absolute; z-index:999; top:1.0em; left:0;}
+ul.oktopartial_tip > li:hover > ul > li  {background-color: #FFF; border: dotted 2px #AAA;}
+
+
+/* ディレクトリ */
+ul.oktopartial_dirs {}
+ul.oktopartial_dirs li span.commands{ font-size: smaller;}
+
+
+/* 凡例 */
+.oktopartial_legends dt {float: left; font-weight: bold;}
+.oktopartial_legends dd {margin: 1em;}
+.oktopartial_legends dd:before {content: ' : ';}

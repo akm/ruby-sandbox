@@ -1,0 +1,28 @@
+<p>
+  <b>Method:</b>
+  <%=h @content.method_name %>
+</p>
+
+<p>
+  <b>Path:</b>
+  <%=h @content.path %>
+</p>
+
+<p>
+  <b>Static cd:</b>
+  <%=h @content.static_cd %>
+</p>
+
+<p>
+  <b>View cd:</b>
+  <%=h @content.view_cd %>
+</p>
+
+<p>
+  <b>Aaction cd:</b>
+  <%=h @content.action_cd %>
+</p>
+
+
+<%= link_to 'Edit', :action => :edit, :id => @content.id %> |
+<%= link_to 'Back', :action => :index %>

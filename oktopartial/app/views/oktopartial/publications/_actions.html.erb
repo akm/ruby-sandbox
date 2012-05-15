@@ -1,0 +1,33 @@
+<% publication ||= nil -%>
+<% render_publish_attention ||= false -%>
+
+<% if publication.next_action == :prepare -%>
+  <div style="float:left;">
+    &nbsp;&nbsp;
+    <%= link_to 'Prepare', {:action => 'prepare', :id => publication.id}, :method => :post %>
+  </div>
+<% end -%>
+
+<% if publication.next_action == :publish -%>
+  <div style="float:left;">
+      &nbsp;&nbsp;
+    <%= link_to 'Publish', {:action => 'publish', :id => publication.id}, :method => :post %>
+  </div>
+  <ul class="oktopartial_tip">
+    <li>
+      ( <a href="javascript:void(0)">*</a> )
+      <ul>
+        <li>
+          <h2>Attention!!</h2>
+          If you push 'Publish' button, Oktopartial will do following actions:
+          <ul>
+            <li>remove public/<%=h publication.dest_path_in_public %>
+            <li>copy uploaded file(s) to public/<%=h publication.dest_path_in_public %>
+          </ul>
+
+        </li>
+      </ul>
+    </li>
+  </ul>
+<% end -%>
+<br class="oktopartial_clear"/>

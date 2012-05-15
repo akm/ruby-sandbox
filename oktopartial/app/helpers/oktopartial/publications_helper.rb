@@ -1,0 +1,2 @@
+module Oktopartial::PublicationsHelper
+end

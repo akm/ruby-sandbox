@@ -1,0 +1,36 @@
+<% content_for(Oktopartial.key_of_content_for_css || :css) do -%>
+<link rel="stylesheet" type="text/css" media="screen,projection,print" href="/stylesheets/oktopartial.css" />
+<% end -%>
+<%= render :partial => 'oktopartial/menu' %>
+
+<h1>New content</h1>
+
+<% form_for(:content, :url => {:controller => 'oktopartial/contents', :action => 'create'}) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :method_name %><br />
+    <%= f.text_field :method_name %>
+  </p>
+  <p>
+    <%= f.label :path %><br />
+    <%= f.text_field :path %>
+  </p>
+  <p>
+    <%= f.label :is_static %><br />
+    <%= f.text_field :static_cd %>
+  </p>
+  <p>
+    <%= f.label :is_view %><br />
+    <%= f.text_field :view_cd %>
+  </p>
+  <p>
+    <%= f.label :is_action %><br />
+    <%= f.text_field :action_cd %>
+  </p>
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', :action => :index %>

@@ -1,0 +1,46 @@
+<% content_for(Oktopartial.key_of_content_for_css || :css) do -%>
+<link rel="stylesheet" type="text/css" media="screen,projection,print" href="/stylesheets/oktopartial.css" />
+<style>
+<!--
+<%-# パスのテーブル -%>
+.oktopartial_paths table td.path {text-align: left; }
+.oktopartial_paths table td.status {text-align: center;}
+-->
+</style>
+<% end -%>
+
+<%= render :partial => 'oktopartial/menu' %>
+
+<h1>Static Files, Action and Views</h1>
+
+<%= flash_messages %>
+
+<div class="oktopartial_layout1_sidebar">
+  <% form_tag(:controller => "oktopartial/contents", :action => "update_all") do -%>
+    <%= submit_tag "Update Contents" %>
+    <ul>
+      <li>You can push this button if you open this page at first time 
+        or if you want to refresh content data. </li>
+    </ul>
+  <% end -%>
+
+  <%= render :file => 'oktopartial/directories/index' %>
+  <%= render :file => 'oktopartial/directories/new' %>
+
+  <h2>Legends</h2>
+  <dl class="oktopartial_legends">
+    <dt>--</dt><dd>not exist</dd>
+    <dt>OK</dt><dd>available</dd>
+    <dt>NA</dt><dd>Not Available</dd>
+    <dt>DI</dt><dd>Depends on Implementation or config/routes.rb</dd>
+  </dl>
+  <h2>Note</h2>
+  <ul>
+    <li>actual view file extension is not .html but .html.erb or .rhtml</li>
+  </ul>
+</div>
+<div class="oktopartial_layout1_main">
+  <div id="path_table_container" class="oktopartial_paths">
+    <%= render :partial => 'table' %>
+  </div>
+</div>

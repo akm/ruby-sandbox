@@ -1,0 +1,13 @@
+<ul class="oktopartial_dirs">
+  <% @dirs.each do |dir| -%>
+    <li>
+      <%= link_to_remote(h(dir), :update => "path_table_container", :method => :get, :url => {:action => 'index', :dir => dir}) %>
+      <span class="commands">
+        [
+        <%= link_to('destroy', {:controller => 'oktopartial/directories', :action => 'destroy', :directory_name => dir}, 
+          :method => :delete, :confirm => 'Are you sure?') %>
+        ]
+      </span>
+    </li>
+  <% end -%>
+</ul>

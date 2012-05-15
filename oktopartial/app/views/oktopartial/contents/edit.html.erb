@@ -1,0 +1,32 @@
+<h1>Editing content</h1>
+
+<% form_for(:content, :url => {:controller => 'oktopartial/contents', :action => 'update', :id => @content.id}, :html => {:method => :put}) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :method_name %><br />
+    <%= f.text_field :method_name %>
+  </p>
+  <p>
+    <%= f.label :path %><br />
+    <%= f.text_field :path %>
+  </p>
+  <p>
+    <%= f.label :is_static %><br />
+    <%= f.text_field :static_cd %>
+  </p>
+  <p>
+    <%= f.label :is_view %><br />
+    <%= f.text_field :view_cd %>
+  </p>
+  <p>
+    <%= f.label :is_action %><br />
+    <%= f.text_field :action_cd %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', :action => :show, :id => @content.id %> |
+<%= link_to 'Back', :action => :index %>

@@ -1,0 +1,26 @@
+<table>
+  <thead>
+    <tr>
+      <th>Path</th>
+      <th>Static HTML</th>
+      <th>Action</th>
+      <th>View</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% dir_regexp = /^#{Regexp.escape(@dir)}/ unless @dir.blank? -%>
+    <% @contents.each do |content| -%>
+    <tr class="<%= cycle('even', 'odd') %>">
+      <td class="path" nowrap="nowrap"><%=link_to(h(@dir.blank? ? content.path : content.path.sub(dir_regexp, '')), content.path, :target => :preview) %></td>
+      <td class="status"><%=h to_display_status(content.status_static) %></td>
+      <td class="status"><%=h to_display_status(content.status_action) %></td>
+      <td class="status"><%=h to_display_status(content.status_view) %></td>
+    </tr>
+    <% end -%>
+  </tbody>
+</table>
+
+<% dest_dir_path = @dir || '/' -%>
+<%= link_to "publish a file or zipped files to #{dest_dir_path}", 
+  :controller => 'oktopartial/publications', :action => :new, :dest_dir => dest_dir_path %>
+
