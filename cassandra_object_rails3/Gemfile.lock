@@ -1,0 +1,115 @@
+--- 
+dependencies: 
+  rails: 
+    group: 
+    - :default
+    version: = 3.0.0.beta3
+  simple_uuid: 
+    group: 
+    - :default
+    version: = 0.1.0
+  sqlite3-ruby: 
+    group: 
+    - :default
+    version: ">= 0"
+    require: 
+    - sqlite3
+  cassandra_object: 
+    group: 
+    - :default
+    version: = 0.5.0.pre
+  shoulda: 
+    group: 
+    - :test
+    version: ">= 0"
+  unicorn: 
+    group: 
+    - :default
+    version: ">= 0"
+  cassandra: 
+    group: 
+    - :default
+    version: = 0.7.6
+  nokogiri: 
+    group: 
+    - :default
+    version: = 1.4.1
+specs: 
+- rake: 
+    version: 0.8.7
+- abstract: 
+    version: 1.0.0
+- builder: 
+    version: 2.1.2
+- i18n: 
+    version: 0.3.7
+- memcache-client: 
+    version: 1.8.3
+- tzinfo: 
+    version: 0.3.22
+- activesupport: 
+    version: 3.0.0.beta3
+- activemodel: 
+    version: 3.0.0.beta3
+- erubis: 
+    version: 2.6.5
+- rack: 
+    version: 1.1.0
+- rack-mount: 
+    version: 0.6.6
+- rack-test: 
+    version: 0.5.4
+- actionpack: 
+    version: 3.0.0.beta3
+- mime-types: 
+    version: "1.16"
+- polyglot: 
+    version: 0.3.1
+- treetop: 
+    version: 1.4.8
+- mail: 
+    version: 2.2.5
+- text-hyphen: 
+    version: 1.0.0
+- text-format: 
+    version: 1.0.0
+- actionmailer: 
+    version: 3.0.0.beta3
+- arel: 
+    version: 0.3.3
+- activerecord: 
+    version: 3.0.0.beta3
+- activeresource: 
+    version: 3.0.0.beta3
+- bundler: 
+    version: 0.9.25
+- json: 
+    version: 1.4.3
+- simple_uuid: 
+    version: 0.1.0
+- thrift: 
+    version: 0.2.0.4
+- thrift_client: 
+    version: 0.4.0
+- cassandra: 
+    version: 0.7.6
+- cassandra_object: 
+    version: 0.5.0.pre
+- nokogiri: 
+    version: 1.4.1
+- thor: 
+    version: 0.13.6
+- railties: 
+    version: 3.0.0.beta3
+- rails: 
+    version: 3.0.0.beta3
+- shoulda: 
+    version: 2.10.3
+- sqlite3-ruby: 
+    version: 1.2.5
+- unicorn: 
+    version: 0.99.0
+hash: 98fc28ab2b1db849658c12eb5d075ae50f82792e
+sources: 
+- Rubygems: 
+    uri: http://rubygems.org
