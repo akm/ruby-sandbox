@@ -1,0 +1,13 @@
+= Oktopartialでmultiflex3をまとめてみた
+
+oktopartial( http://github.com/akm/oktopartial )を使って、重複のあるページを
+部品に分けてそれを組み合わせる形にしたらどれくらいになるのかを調べてみました。
+
+元々のソースコードは以下から取得しました。
+http://www.free-css.com/free-css-templates/page48/multiflex-3.php
+
+結果は以下の通り、
+適用前: 合計 117,235 byte
+適用後: 合計  55,354 byte
+ 
+約半分以下(47%)にまで減らすことができました。

@@ -1,0 +1,461 @@
+= Oktopartial
+== Oktopartialとは？
+
+oktopartialは デザイン時の静的HTMLでの重複を取り除き、管理対象を整理することで、
+WebデザイナーとRailsプログラマ間のコミュニケーションのロスを減らし、Railsのアプリケーションへの適用をスムーズにします。
+
+
+実際に適用している例を作っているので、こちらも参照してください。
+http://github.com/akm/oktopartial_sandbox
+
+
+== 何ができるの？
+1. 静的なHTMLに動的な要素を埋め込む
+2. 静的レイアウトの適用
+3. サーバー不要で、動的要素や静的レイアウトの適用の確認
+4. Railsのapp/views/layouts以下のレイアウトを静的HTMLに適用（要サーバー）
+
+
+== どうやってやるの？
+
+=== 0. 準備
+
+==== 0.1. 心の準備
+最初に、これを呼んでいるあなたがRails開発者なら、Webデザイナーになったつもりで読んでください。
+サーバー側の話になるまでは、それで十分理解できると思います。
+
+あなたがWebデザイナーなら、あなたもRailsのプロジェクトの中で作業することになります。
+すくなくともディレクトリ構造だけは把握できるように教えてもらいましょう。
+
+また、もしかしたら実際の確認時にはサーバーも必要になるかもしれません。
+どんな風に開発を進めるのかをRails開発者と十分に相談しましょう。
+使っているツールが余計なHTMLタグを出力してしまうとか問題があるかもしれません。
+事前の確認をRails開発者と一緒にやるのが良いでしょう。
+
+ぶっちゃけoktopartialのjsは、Rails以外のプロジェクトでも使用できます。
+いまはまだそのドキュメントがありませんが、必要な人がいたら書くかもしれません（たぶん不要だと思いますが）。
+
+
+
+==== 0.2. oktopartialのインストール
+Webデザイナーのあなたがインストールを行うことはないと思いますが、Rails開発者の為に書いておきます。
+(ここでは既にRailsのプロジェクトができているものとします)
+
+RAILS_ROOTのディレクトリで、
+
+ ruby script/plugin install git://github.com/akm/oktopartial.git
+
+とすればインストールは完了ですが、
+
+ rake oktopartial:setup
+
+を実行して、必要なJavaScriptをコピーしておきましょう。
+
+
+
+==== 0.3. セットアップ
+あなたはこれから静的なHTMLを編集していきますが、それは必ずRailsのプロジェクトのpublic以下の
+ファイルを操作するようにしてください。
+
+静的なHTMLにはjquery.jsとoktopartial.jsをロードするように記述を追加する必要があります。
+
+例)
+ <html>
+   <head>
+     ...
+     <script type="text/javascript" src="../javascripts/jquery.js"></script>
+     <script type="text/javascript" src="../javascripts/oktopartial.js"></script>
+     ...
+   </head>
+   <body>
+     ....
+   </body>
+ </html>
+
+jquery.jsはoktopartialには同梱していませんので、別途用意する必要があります。
+
+jQueryは http://jquery.com/ よりダウンロード可能です。
+jsファイルを public/javascripts にコピーしてください。
+
+あるいは jRails( http://github.com/aaronchi/jrails/ )プラグインをインストールしてください。
+
+ ruby script/plugin install git://github.com/aaronchi/jrails.git
+
+この辺もRails開発者にやってもらいましょう。
+
+
+=== 1. 静的なHTMLに動的な要素を埋め込む
+==== 1.1. URLの確認
+===== 1.1.1. 既に動的な要素を提供する機能がある場合
+担当のRailsプログラマに訊けば良いと思います。
+
+例えば、ログイン用の部品へのアクセスのURLについて、彼/彼女が /session/new と答えたら、すかさず
+「.htmlとか要らないんですか？」と聞き返しましょう。もし彼/彼女が 僕のように「HTMLの場合は拡張子を
+付けても良い」ということを失念しているかもしれないからです。「/session/new.htmlでもいいんですよね？」
+と確認しても彼/彼女が首を縦に振らない場合は、すぐにでも彼/彼女に確認してもらいましょう。
+
+「このURLでアクセスしますよ」というのは、WebデザイナーとRails開発者の間での重要な約束です。
+ここをきっちり確認しておくと、間違いが少なくて良いでしょう。
+
+
+===== 1.1.2. まだ動的な要素を提供する機能がない場合
+担当のRailsプログラマと相談して、どんなURLにするのかを決めましょう。
+
+ログイン用の部品について、あなたが「/login.html にしましょう」と言うと、もしかしたらRailsプログラマは
+「いえ、/session/new.html でお願いします」と言ってくるかもしれません。「なんでログインがそんな名前に
+なっちゃうの？」とあなたは不思議に思うかもしれませんが、これは既に用意されているプラグインがそういう名前を
+好むというのもあります(RESTfulと言います)。
+
+ちょっと設定(*1)すれば、/login.htmlでも問題ないのですが、あるいはログイン部品とは別の画面と被ってるから
+ちょっと面倒くさいとか、彼/彼女なりの理由があるのかもしれません。
+
+(*1) config/routes.rb に map.connect '/login/', :controller => 'sessions', :action => 'new' とか書けばオッケーなはず。 
+
+どんなに交渉しても彼/彼女が折れなくても、気にすることはありません。
+Rails開発者との約束の名前は /session/new.html にしておいて、あなたが作るファイルは /login.html に
+しておくことも可能です。
+
+という訳で、ここは申し訳ないですけど、折れてください。すみません。
+Rails開発者との約束としては、/session/new.html にした、ということにして話を進めましょう。
+
+
+
+==== 1.2. 動的な要素を使う側の記述
+これでWebデザイナーのあなたと、Railsプログラマの間で「ログイン用の部品の呼び出しは /session/new.html
+というURLで行う」という約束ができました。
+
+次はそれを使うところから始めてみましょう。適当なHTMLファイル(と言っても前述したjsを入れるのを忘れずに！)を
+publicの下に作成してください。その中に以下の記述を書いてみてください。
+
+ <div class="oktopartial_replace">
+   <p class="oktopartial_url">/session/new.html</p>
+ </div>
+
+ここで実際にこのHTMLをローカルで開いてみてください。
+おそらく単に、/session/new.html という文字列が追加されただけだと思います。
+
+もし、既にRails側でログイン用の部品ができているのなら、railsのサーバーを動かして、
+作成したHTMLにサーバー経由でアクセスしてみましょう。
+例えば、 /public/draft/page1.html というファイルを作成した場合、
+  http://localhost:3000/draft/page1.html
+というURLでアクセスできるはずです。すると、ログイン用の部品が表示されているはずです。
+もしうまくいかなかった場合は、Railsプログラマに相談してみてください。
+
+サーバー側にログイン用の部品が用意されていない場合は、次の「開発用のHTMLを作成する」に進んで
+ください。
+
+
+==== 1.3. 開発用のHTMLを作成する
+普通に /session/new.html に対応する部品を用意する場合は、
+publicディレクトリに、sessionというディレクトリを作成して、
+その中にnew.html というファイルを作るだけです。
+このファイルの中身は例えばこんな感じです。
+
+ <form action="." class="login_form">
+   <p>
+     <label for="login_id">Login ID:</label>
+     <input type="text" id="login_id"/>
+   </p>
+   <p>
+     <label for="password">Password:</label>
+     <input type="text" id="password"/>
+   </p>
+   <p>
+     <input type="submit" value="ログイン"/>
+   </p>
+ </form>
+
+<html>から始める必要はありません(というか入れないでください)。
+ログイン用の部品として、必要なものだけを記述してください。
+
+
+しかし、あなたがどうしても /session./new.html なんて意味不明な名前は許せないと思ったら
+/public/session/new.html ではなく、/public/login.html を作っちゃってください。
+
+その代わりちょっと設定を書く必要があります。
+まずは public/javascripts/oktopartial-config.js というファイルを作って、以下の内容をコピーしてください。
+
+ Oktopartial.urlAliases = {
+     // URLに対して別名を設定します。
+     // サーバー接続時／ローカル実行時のどちらも有効です。
+     //
+     // "本番で使用されるURL" :  "開発時に使用されるURL" を記述してください。
+     // "/layouts/header.html": "/layouts/header1.html"
+ };
+
+ Oktopartial.localAliases = {
+     // URLに対して別名を設定します。
+     // ローカル実行時のみ有効です。
+     //
+     // "本番で使用されるURL" :  "ローカルのファイルパス" を記述してください。
+     // "/layouts/application.html": "/layouts/local_layout.html"
+ };
+
+コピーしたら、設定を追加しましょう。
+Oktopartial.urlAliasesとOktopartial.localAliasesという二つの設定する箇所があります。
+Railsプログラマとの約束の名前 /session/new.html は[本番で使用されるURL]に当たります。
+あなたの作ったファイル /login.html は、最終的にはRails側のビューとして取込まれる予定なので、
+[開発時に使用されるURL]です。
+
+ですので、Oktopartial.urlAliases に以下の記述を追加しましょう。
+
+ Oktopartial.urlAliases = {
+     // URLに対して別名を設定します。
+     // サーバー接続時／ローカル実行時のどちらも有効です。
+     //
+     // "本番で使用されるURL" :  "開発時に使用されるURL" を記述してください。
+     // "/layouts/header.html": "/layouts/header1.html"
+     "/session/new.html": "/login.html" 
+ };
+
+もし今後、このような記述が２つ以上必要になったら、カンマ区切りで記述を追加してください。
+
+ Oktopartial.urlAliases = {
+     // URLに対して別名を設定します。
+     // サーバー接続時／ローカル実行時のどちらも有効です。
+     //
+     // "本番で使用されるURL" :  "開発時に使用されるURL" を記述してください。
+     // "/layouts/header.html": "/layouts/header1.html"
+     "/session/new.html"    : "/login.html", # このカンマを忘れないでください。
+     "/session/destroy.html": "/logout.html" # 最後はカンマを付けないでください。IEでエラーになります。
+ };
+
+文中に書きましたが、基本はカンマ区切りですが、最後の設定の後ろにカンマがあるとエラーになってしまいます。
+ですので、この設定のカンマには気を付けてください。
+
+ここまで設定できたら、ローカルでアクセスしたり、Railsを立ち上げて http://localhost:3000/draft/page1.html
+にアクセスしてみてください。ちゃんとログイン用の部品が表示されているはずです。ぱちぱちぱち
+
+
+=== 2. 静的レイアウトの適用
+
+Railsにおけるレイアウトとは、例えば以下のような部品でページが構成されている場合には、
+ |-------------------------------------------------|
+ |                      ヘッダー                    |
+ |-------------------------------------------------|
+ |           |                        |            |
+ | 左ナビ     |         ページ固有      |   右サイド  |
+ | ゲーション |         コンテンツ       |   バー     |
+ |           |                        |            |
+ |-------------------------------------------------|
+ |                      フッター                    |
+ |-------------------------------------------------|
+
+ページ固有コンテンツ以外の部分を指します。より厳密に言えば、通常のHTMLでは
+
+ <html>
+   <head>
+     <title>...</title>
+     <meta .../>
+     <link .../>
+     <script ...></script>
+   </head>
+   <body>
+      (ヘッダー)
+      (左ナビゲーション)
+      (ページ固有コンテンツ)
+      (右サイドバー)
+      (フッター)
+   </body>
+ </html>
+
+という順番になりますので、この中の(ページ固有コンテンツ)以外を除いた部分がレイアウトと呼ばれます。
+# (左ナビゲーション)や(右サイドバー)、もっと言えば、(ヘッダー)や(フッター)もページ毎に違う、
+# というのであれば、これらを全て(ページ固有コンテンツ)として扱うことも可能です。
+# このあなた(とRails開発者)が決めた(ページ固有コンテンツ)以外をレイアウトとして扱うことが可能です。
+
+このRailsのレイアウトは、上記の(ページ固有コンテンツ)の部分を<%= yield %>で置き換えたものです。
+
+ <html>
+   <head>
+     <title>...</title>
+     <meta .../>
+     <link .../>
+     <script ...></script>
+   </head>
+   <body>
+      (ヘッダー)
+      (左ナビゲーション)
+      <%= yield %>
+      (右サイドバー)
+      (フッター)
+   </body>
+ </html>
+
+この <%= yield %> の部分にページ固有コンテンツが差し込まれます。
+
+しかし、oktopartialのレイアウトは、若干異なります。
+静的なHTMLでは、最初に開くページに、<head>部や<body>部が必要です。ですので
+レイアウトを適用したいHTMLは以下のようになり、
+
+ <html>
+   <head>
+     <title>...</title>
+     <meta .../>
+     <link .../>
+     <script ...></script>
+   </head>
+   <body>
+     <div class="oktopartial_layout">
+       <p class="oktopartial_url">/layouts/layout1.html</p>
+
+       (ページ固有コンテンツ)
+
+     </div>
+   </body>
+ </html>
+
+これに対して、レイアウトとなるHTMLファイル(上記の場合は /layouts/layout1.html )は以下のようになります。
+
+ (ヘッダー)
+ (左ナビゲーション)
+ <div class="oktopartial_content"></div>
+ (右サイドバー)
+ (フッター)
+
+oktopartialはこの二つのファイルをうまく組み合わせます。
+
+具体的な例としては、以下を参照してください。
+http://github.com/akm/oktopartial_sandbox/blob/master/public/layouts/layout1.html
+http://github.com/akm/oktopartial_sandbox/blob/master/public/multiflex3/page_layout1.html
+
+
+
+=== 3. サーバー不要で、動的要素や静的レイアウトの適用の確認
+これは実際に試してもらった方が分かり易いでしょう。
+oktopartialを使うとRailsのサーバー経由でページを開いてもちゃんと表示されますし、
+ローカルでHTMLをブラウザで開いてもちゃんと表示されます。ローカルの場合にはちょっとした制約がありまして、
+  <p class="oktopartial_url">/layouts/layout1.html</p>
+という風にURLをスラッシュから始めないといけません。でないとoktopartialがローカで実行したときに
+パスを正しく置換できない可能性があります。相対パスだと正しく表示されないこともあり得ます。
+
+ただし、MacのFirefoxではなぜかうまくいかない場合があります。
+これは追々対応していきたいと思っています。
+
+
+
+
+=== 4. Railsのapp/views/layouts以下のレイアウトを静的HTMLに適用（要サーバー）
+
+==== 4.1. 準備
+さあ、ここからRails技術者の方の出番です。
+
+まずは、config/routes.rbに以下の記述を追加してください。
+
+ map.connect 'layouts/:action', :controller => "oktopartial"
+ map.connect 'layouts/:action.:format', :controller => "oktopartial"
+
+順番としては、最後の方の
+
+ map.connect ':controller/:action/:id'
+ map.connect ':controller/:action/:id.:format'
+
+の前辺りに書いておくと良いと思います。
+
+ここで指定している'layouts/:action' などの layouts ですが、これはWebデザイナーの方が
+publicに作成したレイアウトなどを補完しているディレクトリと同じものにしてください。
+なのでもし、public/reiauto にレイアウト となるHTMLを入れていたら、reiauto にしておいた
+方が分かり易いでしょう。ここでは layouts で進めますが。
+
+==== 4.2. 静的HTMLへの適用
+通常のRailsのレイアウトの適用は、コントローラ毎に
+
+ class FooController < ActionController::Base
+   layout "bar"
+ end
+
+という風に指定したり、renderメソッドのオプションとして、
+
+ render :action => "new", :layout => "baz"
+
+という風に指定しますよね？
+
+oktopartialでの静的HTMLへの静的レイアウトの適用はどのように行われるのかというと、上記 2. 静的レイアウトの適用 で記述したように、
+
+適用したいHTMLの中で、
+
+ <div class="oktopartial_layout">
+   <p class="oktopartial_url">/layouts/layout1.html</p>
+   
+   （ページ固有コンテンツ）
+
+ </div>
+
+という風に書くだけです。つまりoktopartialを使用して、静的HTMLに静的なレイアウトを適用している場合には、そのURLを
+動的なものに変更するだけでオッケーです。
+
+
+ここでは app/views/layouts/application.html.erb という(全てのコントローラにデフォルトで適用される)ビューが
+あったとして、その動的なレイアウトを静的なHTMLに適用する作業をやってみましょう。
+
+まず、app/views/layouts/application.html.erb はこんな感じだとします。
+
+ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+ <html>
+   <head>
+     <link rel="stylesheet" type="text/css" href="/stylesheets/style1.css" />
+     <script type="text/javascript" src="javascripts/jquery.js"></script>
+     <script type="text/javascript" src="javascripts/oktopartial.js"></script>
+     <script type="text/javascript" src="javascripts/oktopartial-config.js"></script>
+   </head>
+   <body>
+     <div>
+       ヘッダー
+     </div>
+
+     <%= yield %>
+
+     <div>
+       フッター
+       現在時刻: <%= Time.now.to_s %>
+     </div>
+   </body>
+ </html>
+
+で、このレイアウトを(と言ってもヘッダーとフッターだけですが)、静的なHTMLに適用したい場合、
+単に静的HTMLで指定しているURLを以下のように変更するだけです。
+
+ <div class="oktopartial_layout">
+   <p class="oktopartial_url">/layouts/application.html</p>
+   
+   （ページ固有コンテンツ）
+
+ </div>
+
+これだけ。非常に簡単ですよね？
+
+一応注意事項を書いておくと、oktopartial_layoutで呼び出されたレイアウトは、ちゃんとサーバー側で
+ERBが動作しますので、<% ... %> や、 <%= ... %> の部分(上記では現在時刻を出力している箇所)は動作します。
+
+しかし、静的HTMLには既に<head>部などはあるはずなので、oktopartial_layoutによるリクエストに対して、
+oktopartialは、<body>タグ以前と、</body>タグ以後を取り除いてレスポンスを返します。
+つまりこの場合、以下のようなHTMLを返すことになります。
+
+    <div>
+      ヘッダー
+    </div>
+    
+    <%= yield %>
+
+    <div>
+      フッター
+      現在時刻: Sun Oct 04 02:00:06 +0900 2009
+    </div>
+
+
+
+== FAQ
+
+ Q. oktopartial_replaceやoktopartial_layoutで返されるレスポンスにscriptタグを書いておいたら、その中のJavaScriptは評価されますか？
+ A. はい、されます。これはoktopartialではなくjQueryが素敵に処理してくれているからです。
+
+ Q. 静的HTMLに書いたERB(<%...%>や<%=...%>)は実行されますか？
+ A. いいえ、されません。ERBはあくまでサーバー側で動くものです。ブラウザ上でERBを動かす仕組みを誰かが作ってくれるまでその機能は実現されないでしょう。
+   ERBを使いたい場合は、適切なコントローラ、アクションを用意して、その部分をapp/views以下のビューに移動した上で、元のHTMLからoktopartial_replaceを
+   使って呼び出してください。
+
+
+
+
+-----
+Copyright (c) 2009 'Takeshi AKIMA, released under the MIT license
