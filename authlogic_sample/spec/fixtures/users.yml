@@ -1,0 +1,8 @@
+ben:
+  login: bjohnson
+  password_salt: <%= salt = Authlogic::Random.hex_token %>
+  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("benrocks" + salt) %>
+  persistence_token: 00206a849cc2f9ae4cb2a1dad184df9a09bbea1a0edbd0309c9b8d357caa0d4968ad584f638be5baf403ac202dded567f9100ab15f67f39037145263ba33afea
+  single_access_token: j4GvVB3LOiNsWkNGRkxv
+  perishable_token: 0ITaBFZ304F74NbCyIXZ
+  email: bjohnson@example.com
