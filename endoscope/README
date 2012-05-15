@@ -1,0 +1,55 @@
+Endoscope
+=========
+
+Endoscopeは動いているRailsの様々な内部の動きを開発者が確認できるようにするものです。
+現在用意されている機能
+* クラス／モジュールの継承関係やincludeの関係を表示
+* どのファイルがどこでrequireされたのか、依存関係の表示
+* どのファイルがどんなクラスを定義しているのかを表示
+
+まだまだ開発中ですので、おかしなバグなどありましたらご連絡ください。
+
+
+
+Install
+=======
+<pre>
+<code>
+ruby script/plugin install git://github.com/akm/endoscope.git
+</code>
+</pre>
+
+をした後に、普通ではやってはいけない、config/boot.rbに手を入れて先頭に以下の行を追加してください。
+<pre>
+<code>
+# Don't change this file!
+# Configure your app in config/environment.rb and config/environments/*.rb
+
+if ENV['ENDOSCOPE'] && ENV['ENDOSCOPE'] !~ /off|false|disabled/i
+  require File.join(File.dirname(__FILE__), '..', 'vendor', 'plugins', 'endoscope', 'lib', 'endoscope')
+  Endoscope.setup('config/boot')
+end
+</code>
+</pre>
+
+
+
+Usage
+=======
+サーバーを起動する際に環境変数ENDOSCOPEにon/true/enabledなどを指定してください。何も付けなければ、動かないはずです。
+<pre>
+<code>
+ENDOSCOPE=on ruby script/server
+</code>
+</pre>
+
+
+
+Memo
+=======
+内部では凶悪とされるObjectSpaceを使っています。動作もまだそれほど安定していません。
+ですのでインストールはちゃんとバックアップとか取ってから行ってください。何も書き出したりしてないんで大丈夫だとは思いますが。
+このプラグインをインストールしてサーバーなどが遅くなっても一切責任を取りません。
+
+
+Copyright (c) 2009 [akm], released under the MIT license

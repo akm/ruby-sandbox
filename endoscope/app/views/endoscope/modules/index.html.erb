@@ -1,0 +1,19 @@
+<div style="float:left;">
+  <h1>Classes</h1>
+  <% render_descendants do |klass, depth| -%>
+    <div style="margin-left: <%= depth %>em;">
+      <%= link_to_module(klass) %>
+    </div>
+  <% end -%>
+</div>
+
+<div style="float:left;">
+  <h1>Modules</h1>
+  <% @modules.each do |m| -%>
+  <div>
+    <%= link_to_module(m) %>
+  </div>
+  <% end -%>
+</div>
+
+<br style="float:both;"/>

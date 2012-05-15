@@ -1,0 +1,7 @@
+<h1><%=h @dependency.called_place %></h1>
+
+<% @feature = @dependency.feature -%>
+
+<%= render :partial => 'endoscope/features/show', :locals => {:feature => @feature} %>
+
+<% file_name = @dependency.called_place -%>

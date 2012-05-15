@@ -1,0 +1,31 @@
+<h2>'<%=h feature.name %>' requires</h2>
+<%= render :partial => 'endoscope/dependencies/dependencies', :locals => {:dependencies => feature.dependencies} %>
+
+<br/>
+
+<h2>'<%=h feature.name %>' define these modules/classes</h2>
+<table>
+  <% feature.modules.each do |m| -%>
+    <tr>
+      <td><%= link_to_module(m) %></td>
+    </tr>
+  <% end -%>
+</table>
+
+<br/>
+<br/>
+
+<h2>'<%=h @feature.name %>' referred from</h2>
+<%= render :partial => 'endoscope/dependencies/dependencies', :locals => {:dependencies => feature.referreds} %>
+
+<h2>source code</h2>
+<h3><%=h @feature.path %></h3>
+<% if @feature.human_readable? -%>
+<pre>
+<%=h File.read(@feature.real_path)  %>
+</pre>
+<% elsif @feature.real_path.nil? -%>
+  [Source code not found]
+<% else -%>
+  Unreadable
+<% end -%>

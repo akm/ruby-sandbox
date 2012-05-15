@@ -1,0 +1,86 @@
+<h1>
+  <% if @module.name.blank? -%>
+    <%= module_name(@module) %>
+  <% else -%>
+    <% parts = @module.name.split('::') -%>
+    <% parts.each_with_index do |part, index| 
+      -%><%= '::' unless index == 0 
+       %><%= link_to h(part), :action => 'show', :id => parts[0..index].join('::').constantize.object_id 
+       -%><% end 
+    -%>
+  <% end -%>
+</h1>
+
+<% if @module.is_a?(Class) -%>
+  <h2>class hierarchy</h2>
+<% else -%>
+  <h2>module hierarchy</h2>
+<% end -%>
+
+<table border="1" cellpadding="0" cellspacing="0">
+  <% @ancestors.each_with_index do |ancestor, index| -%>
+    <tr>
+      <td valign="top" style="padding-left: <%= index %>em;">
+        <%= link_to_module(ancestor) %>
+      </td>
+      <td>
+        <% each_direct_included_modules(ancestor, 0) do |m, depth| -%>
+          <div style="padding-left: <%= depth %>em;">
+            <%= link_to_module(m) %>
+          </div>
+        <% end -%>
+      </td>
+    </tr>
+  <% end -%>
+
+  <tr>
+    <td valign="top" style="padding-left: <%= @ancestors.length %>em;">
+      <b><%= module_name(@module) %></b>
+    </td>
+    <td>
+      <% each_direct_included_modules(@module, 0) do |m, depth| -%>
+        <div style="padding-left: <%= depth %>em;">
+          <%= link_to_module(m) %>
+        </div>
+      <% end -%>
+    </td>
+  </tr>
+
+  <% render_children(@module, @ancestors.length + 1) do |klass, depth| -%>
+    <tr>
+      <td valign="top" style="padding-left: <%= depth %>em;">
+        <%= link_to_module(klass) %>
+      </td>
+      <td>
+        <% each_direct_included_modules(klass, 0) do |m, depth| -%>
+          <div style="padding-left: <%= depth %>em;">
+            <%= link_to_module(m) %>
+          </div>
+        <% end -%>
+      </td>
+    </tr>
+  <% end -%>
+</table>
+
+<h2>modules including this module</h2>
+<% @including_modules.sort_by{|m| m.name.blank? ? '' : m.name}.each do |m| -%>
+<div>
+  <%= link_to_module(m) %>
+</div>
+<% end -%>
+
+
+<h2>nesting</h2>
+<% @nestings.sort_by{|m| m.name.blank? ? '' : m.name}.each do |m| -%>
+<div>
+  <%= link_to_module(m) %>
+</div>
+<% end -%>
+
+
+<h2>loaded from</h2>
+<% (Endoscope.class_to_features[@module] || []).each do |feature| -%>
+<div>
+  <%= link_to h(feature.name), :controller => 'endoscope/features', :action => 'show', :id => feature.index %>
+</div>
+<% end -%>

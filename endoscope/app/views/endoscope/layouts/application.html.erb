@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>Endoscope: <%= controller.action_name %></title>
+  <%= javascript_include_tag :defaults %>
+</head>
+<body>
+  <div style="position:fixed; top:0px; margin:5px; background-color: #FFF; border: 3px dotted #777; padding: 5px;">
+    <%= link_to "&laquo; application home", "/" %> |
+
+    <b>endoscope</b>
+    <%= link_to "modules/classes", :controller => "endoscope/modules" %> |
+    <%= link_to "dependencies", :controller => "endoscope/dependencies" %> |
+    <%= link_to "features", :controller => "endoscope/features" %> |
+
+    <%= link_to "endoscope home &raquo;", "http://github.com/akm/endoscope" %>
+  </div>
+
+  <div style="margin-top: 50px;">
+    <p id="flash_notice_area" style="color: green"><%= flash[:notice] %></p>
+    <%= yield  %>
+  </div>
+</body>
+</html>

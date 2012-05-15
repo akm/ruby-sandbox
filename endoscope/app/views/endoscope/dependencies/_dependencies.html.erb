@@ -1,0 +1,19 @@
+<table>
+  <% dependencies.each do |dependency| -%>
+  <tr>
+    <td valign="top"><%=link_to h(dependency.source.name), 
+                   :controller => 'endoscope/features', :action => 'show', :id => dependency.source.index %>
+    </td>
+    <td valign="top">
+      <%=h dependency.method %><%= '[n]' if dependency.no_loading %>
+    </td>
+    <td valign="top"><%=link_to h(dependency.feature.name), 
+                   :controller => 'endoscope/features', :action => 'show', :id => dependency.feature.index %>
+    </td>
+    <td valign="top">at
+      <%= link_to h(dependency.called_place),
+          :controller => 'endoscope/dependencies', :action => 'show', :id => dependency.index %>
+    </td>
+  </tr>
+  <% end -%>
+</table>

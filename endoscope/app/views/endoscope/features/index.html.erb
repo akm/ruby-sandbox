@@ -1,0 +1,10 @@
+<h1>Loaded Features</h1>
+
+<% @features.each do |feature| -%>
+  <div>
+    <%= link_to h(feature.name), :action => 'show', :id => feature.index %>
+    <% if feature.real_path.nil? -%>
+      [Source code not found]
+    <% end -%>
+  </div>
+<% end -%>
