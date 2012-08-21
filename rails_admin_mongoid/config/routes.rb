@@ -1,9 +1,11 @@
 RailsAdminMongoid::Application.routes.draw do
   resources :products
 
+  devise_for :admin_users
+
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 
-  devise_for :admin_users
+  root :to => "products#index"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
